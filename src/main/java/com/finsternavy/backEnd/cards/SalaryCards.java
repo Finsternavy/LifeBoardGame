@@ -3,7 +3,7 @@ package backEnd;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class SalaryCards {
+public class SalaryCards implements Card {
 
 	int salary;
 	
@@ -86,6 +86,13 @@ public class SalaryCards {
 			
 		}	
 		
+	}
+	
+	@Override
+	public String getCardDetails() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Salary: ").append(this.salary);
+		return sb.toString();
 	}
 	
 }

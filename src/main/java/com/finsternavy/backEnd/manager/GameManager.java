@@ -1,8 +1,16 @@
 package backEnd;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameManager {
+	
+	// define magic numbers
+	private static final int YOUR_VAR = -1;
+	private static final int CHOOSE_JOB_TILE = 12;
+	private static final int LOOSE_JOB_CHOOSE_NEW_JOB = 40;
+	private static final int SPLIT_TILE = 50;
 	
 	int playersTurn = 0;
 	int numberOfPlayers;
@@ -12,8 +20,7 @@ public class GameManager {
 	SalaryCards mySalaryCards = new SalaryCards();
 	
 	
-	public GameManager(){
-		
+	public GameManager() {
 		
 	}
 	
@@ -24,12 +31,12 @@ public class GameManager {
 		if(lastPlayersTurn < (numberOfPlayers -1)){
 			
 			this.playersTurn = lastPlayersTurn + 1;
-			gameFlow(GameTest.playersInPlay.get(playersTurn));
+			gameFlow(Application.playersInPlay.get(playersTurn));
 			
 		}else{
 			
 			playersTurn = 0;
-			gameFlow(GameTest.playersInPlay.get(playersTurn));
+			gameFlow(Application.playersInPlay.get(playersTurn));
 			
 		}	
 	}
@@ -67,13 +74,13 @@ public class GameManager {
 					wheel.spinTheWheel();
 					System.out.println("You spun a " + wheel.getLastSpin());
 					
-					if(player.getBoardPosition() < 12){
+					if(player.getBoardPosition() < CHOOSE_JOB_TILE){
 						
 						player.setBoardPosition(player.getBoardPosition() + wheel.getLastSpin());
 						
-						if(player.getBoardPosition() >= 12){
+						if(player.getBoardPosition() >= CHOOSE_JOB_TILE){
 							
-							player.setBoardPosition(12);
+							player.setBoardPosition(CHOOSE_JOB_TILE);
 							System.out.println(player.getName() + ", your current board position is " + player.getBoardPosition() + "\n");
 							gameSpaceFunction(player);
 						
@@ -85,22 +92,22 @@ public class GameManager {
 							
 						}
 					
-					}else if(player.getBoardPosition() >= 12 && player.getBoardPosition() < 40){
+					}else if(player.getBoardPosition() >= CHOOSE_JOB_TILE && player.getBoardPosition() < LOOSE_JOB_CHOOSE_NEW_JOB){
 						
 						player.setBoardPosition(player.getBoardPosition() + wheel.getLastSpin());
 						System.out.println(player.getName() + ", your current board position is " + player.getBoardPosition() + "\n");
 						gameSpaceFunction(player);
 						
-					}else if(player.getBoardPosition() >= 40 && player.getBoardPosition() < 50){
+					}else if(player.getBoardPosition() >= LOOSE_JOB_CHOOSE_NEW_JOB && player.getBoardPosition() < SPLIT_TILE){
 						
 						int tempPosition = player.getBoardPosition() + wheel.getLastSpin();
 						
 						
-						if(tempPosition > 50){
+						if(tempPosition > SPLIT_TILE){
 							
-							int movesLeft = tempPosition - 50;
+							int movesLeft = tempPosition - SPLIT_TILE;
 							
-							int playersNewPosition = 50;
+							int playersNewPosition = SPLIT_TILE;
 							
 							System.out.println("Turn ahead! Do you want to turn left or right? Type 1 for left and 2 for right.");
 							
@@ -140,11 +147,11 @@ public class GameManager {
 							
 						}
 						
-					}else if(player.getBoardPosition() == 50){
+					}else if(player.getBoardPosition() == SPLIT_TILE){
 						
 						gameSpaceFunction(player);
 						
-					}else if(player.getBoardPosition() > 50 && player.getBoardPosition() <58){
+					}else if(player.getBoardPosition() > SPLIT_TILE && player.getBoardPosition() < 58){
 						
 						int playersNextPosition = player.getBoardPosition() + wheel.getLastSpin();
 						
@@ -547,7 +554,7 @@ public class GameManager {
 					setPlayersTurn(numberOfPlayers);
 					
 					//Redo so it performs job search vise house search.. Ref case 38 for help.
-		case 12:	System.out.println("Stop! Job Search. Select a job.");
+		case CHOOSE_JOB_TILE:	System.out.println("Stop! Job Search. Select a job.");
 					player.setDegree(true);
 					myJobCards.returnJobCards(player, 3);
 					System.out.println("Type 1 for: " + myJobCards.threeCardChoice.get(0).name + "\nType 2 for: " + myJobCards.threeCardChoice.get(1).name + "\n"
@@ -719,16 +726,16 @@ public class GameManager {
 						
 						player.removeFunds(5000);
 						
-						for(int i = 0; i < GameTest.playersInPlay.size(); i++){
+						for(int i = 0; i < Application.playersInPlay.size(); i++){
 						
-							if(GameTest.playersInPlay.get(i).getJob() == "Doctor"){
+							if(Application.playersInPlay.get(i).getJob() == "Doctor"){
 							
-								GameTest.playersInPlay.get(i).addFunds(5000);
-								System.out.println(GameTest.playersInPlay.get(i).getName() + " $5,000 has been added to your funds!");
+								Application.playersInPlay.get(i).addFunds(5000);
+								System.out.println(Application.playersInPlay.get(i).getName() + " $5,000 has been added to your funds!");
 							
 							}else{
 							
-								System.out.println(GameTest.playersInPlay.get(i).getName() + " is not a Doctor.\n");
+								System.out.println(Application.playersInPlay.get(i).getName() + " is not a Doctor.\n");
 							
 							}
 						}
@@ -913,15 +920,15 @@ public class GameManager {
 						int tax = player.getSalary() / 2;
 						player.removeFunds(tax);
 						
-						for(int i = 0; i < GameTest.playersInPlay.size(); i ++){
+						for(int i = 0; i <Application.playersInPlay.size(); i ++){
 							
-							if(GameTest.playersInPlay.get(i).getJob() == "Accountant"){
+							if(Application.playersInPlay.get(i).getJob() == "Accountant"){
 								
-								GameTest.playersInPlay.get(i).addFunds(tax);
+								Application.playersInPlay.get(i).addFunds(tax);
 								
 							}else{
 								
-								System.out.println(GameTest.playersInPlay.get(i).getName() + " is not an Accountant.");
+								System.out.println(Application.playersInPlay.get(i).getName() + " is not an Accountant.");
 								
 							}
 							
@@ -1015,11 +1022,12 @@ public class GameManager {
 					System.out.println("$" + player.getSalary() + " has been added to your funds. Your new funds total is: " + player.getFunds());
 					setPlayersTurn(numberOfPlayers);
 			
-		case 40:	System.out.println("You're fired!!! Start a new career.");
+		case LOOSE_JOB_CHOOSE_NEW_JOB:	System.out.println("You're fired!!! Start a new career.");
 					
-					myJobCards.returnJobCards(player, 1);
-					
-					player.setJob(myJobCards.threeCardChoice.get(0).getName());
+					List<JobCards> jobsForYou = myJobCards.returnJobCards(player);
+					// todo, let player pick the job, for now random
+					JobCards card = jobsForYou.get(ThreadLocalRandom.current().nextInt(0, jobsForYou.size()));
+					player.setJob(card.getName());
 					
 					mySalaryCards.returnSalaryCards(1);
 					
@@ -1072,7 +1080,7 @@ public class GameManager {
 					setPlayersTurn(numberOfPlayers);
 			
 		case 50:	System.out.println("House flooded! Pay $40,000 if not insured.");
-					if(player.getHomeInsuranceStatus() == false){
+					if(player.isHomeInsuranceStatus() == false){
 						
 						player.removeFunds(40000);
 						setPlayersTurn(numberOfPlayers);

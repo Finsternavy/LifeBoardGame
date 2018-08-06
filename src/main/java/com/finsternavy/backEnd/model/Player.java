@@ -1,5 +1,10 @@
 package backEnd;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Player {
 	
 	/*This class tracks player progress through the game. 
@@ -25,6 +30,7 @@ public class Player {
 	boolean isRetiredMillionaire;
 	int boardPosition = 0;
 	int lostTurn = 0;
+	private JobCards jobCard;
 	
 	//Empty constructor
 	public Player (){
@@ -39,98 +45,11 @@ public class Player {
 		
 	}
 	
-	public int getPlayerID(){
-		return playerID;
-	}
-	
-	public void setPlayerID(int playerID){
-		
-		this.playerID = playerID;
-		
-	}
-	
-	public String getName(){
-		return name;
-	}
-	
-	public void setName(String name){
-		
-		this.name = name;
-		
-	}
-	
-	public String getJob(){
-		
-		return job;
-		
-	}
-	
-	public void setJob(String job){
-		
-		this.job = job;
-		
-	}
-	
-	public void setDegree(boolean b){
-		
-		this.hasDegree = b;
-		
-	}
-	
-	public boolean getDegree(){
-		
-		return this.hasDegree;
-		
-	}
-	
-	public int getSalary(){
-		
-		return salary;
-		
-	}
-	
-	public void setSalary(int salary){
-		
-		this.salary = salary;
-		
-	}
-	
-	public boolean getMarried(){
-		
-		return married;
-		
-	}
-	
-	public void setMarried(Boolean married){
-		
-		this.married = married;
-		
-	}
-	
-	public int getKids(){
-		
-		return kids;
-		
-	}
-	
-	public void setKids(int kids){
-		
-		this.kids = this.getKids() + kids;
-		
-	}
-	
-	public int getFunds(){
-		
-		return this.funds;
-		
-	}
-	
 	public void addFunds(int funds){
 		
 		this.funds = this.getFunds() + funds;
 		
 	}
-	
 	
 	public void removeFunds(int payment){
 		
@@ -143,12 +62,6 @@ public class Player {
 			this.increaseBankLoan(payment);
 			
 		}
-		
-	}
-	
-	public int getTotalBankLoan(){
-		
-		return totalBankLoan;
 		
 	}
 	
@@ -173,78 +86,10 @@ public class Player {
 		
 	}
 	
-	public boolean getAutoInsuranceStatus(){
-		
-		return autoInsurance;
-		
-	}
-	
-	public void setAutoInsuranceStatus(boolean autoInsurance){
-		
-		this.autoInsurance = autoInsurance;
-		
-	}
-	
-	public boolean getHomeInsuranceStatus(){
-		
-		return homeInsurance;
-		
-	}
-	
-	public void setHomeInsuranceStatus(boolean homeInsurance){
-		
-		this.homeInsurance = homeInsurance;
-		
-	}
-	
-	public int getLifeTiles(){
-		
-		return lifeTiles;
-		
-	}
-	
-	public void setLifeTiles(int lifeTiles){
-		
+	public void addLifeTiles(int lifeTiles){
 		this.lifeTiles = this.getLifeTiles() + lifeTiles;
-		
 	}
-	
-	public boolean getRetiredStatus(){
-		
-		return isRetired;
-		
-	}
-	
-	public void setRetiredStatus(boolean retired){
-		
-		this.isRetired = retired;
-		
-	}
-	
-	public int getBoardPosition(){
-		
-		return boardPosition;
-		
-	}
-	
-	public void setBoardPosition(int position){
-		
-		this.boardPosition = position;
-		
-	}
-	
-	public boolean getRetiredMillionaire(){
-		
-		return isRetiredMillionaire;
-		
-	}
-	
-	public void setRetiredMillionaire(boolean millionaire){
-		
-		this.isRetiredMillionaire = millionaire;
-		
-	}
-	
+
 	public void advanceOneSpace(){
 		
 		this.boardPosition = this.getBoardPosition() + 1;
@@ -256,63 +101,21 @@ public class Player {
 		
 	}
 	
-	public void setLostTurn(int turns){
+	public void addLostTurn(int turns){
 		
 		this.lostTurn = this.getLostTurn() + turns;
 		
 	}
+
 	
-	public int getLostTurn(){
-		
-		return this.lostTurn;
-		
-	}
-	
-	public void lowerLostTurn(){
+	public void removeLostTurn(){
 		
 		this.lostTurn--;
 		
 	}
 	
-	public void setHouseOwned(String houseOwned){
-		
-		this.houseOwned = houseOwned;
-		
-	}
-	
-	public String getHouseOwned(){
-		
-		return this.houseOwned;
-		
-	}
-	
-	public void setHouseTax(int houseTax){
-		
-		this.houseTax = houseTax;
-		
-	}
-	
-	public int getHouseTax(){
-		
-		return this.houseTax;
-		
-	}
-	
-	public void setHouseInsuranceCost(int houseInsuranceCost){
-		
-		this.houseInsuranceCost = houseInsuranceCost;
-		
-	}
-	
-	public int getHouseInsuranceCost(){
-		
-		return this.houseInsuranceCost;
-		
-	}
-	
+	@Override
     public String toString(){
-
-  
     	String playerID = "Player ID: " + new StringBuilder().append(this.playerID).toString() + "\n";
     	String playerName = "Player Name: " + new StringBuilder().append(this.name).toString() + "\n";
     	String playerJob = "Player Job: " + new StringBuilder().append(this.job).toString() + "\n";
@@ -327,29 +130,9 @@ public class Player {
     	String playerRetired = "Player Retired?: " + new StringBuilder().append(this.isRetired).toString() + "\n";
     	String playerRetiredMillionaire = "Player retired at Millionaire estate?: " + new StringBuilder().append(this.isRetiredMillionaire).toString() + "\n";
     	String playerBoardPosition = "Player is at position: " + new StringBuilder().append(this.boardPosition).toString() + "\n";
-    	
-    
+
     	return playerID + playerName + playerJob + playerSalary + playerMarried + playerKids + playerFunds + playerBankLoans + playerAuto + playerHome + playerLifeTiles
     			+ playerRetired + playerRetiredMillionaire + playerBoardPosition;
-        
-
+       
     }
-	
-	
-	public static void main(String[] args) {
-		
-		Player player1 = new Player(1, "Noah");
-	
-		
-		
-		System.out.println(player1);
-		
-		player1.increaseBankLoan(20000);
-		
-		System.out.println(player1.toString());
-		
-	} 
-	
-
-	
 }
