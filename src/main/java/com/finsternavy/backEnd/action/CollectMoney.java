@@ -3,6 +3,9 @@ package backEnd;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Collects money for the current player
+ */
 @RequiredArgsConstructor
 @Builder
 public class CollectMoney implements Action {

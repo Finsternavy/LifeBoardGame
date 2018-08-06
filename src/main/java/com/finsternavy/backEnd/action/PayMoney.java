@@ -21,6 +21,6 @@ public class PayMoney implements Action {
         
         // if another player has this job, pay them
         GameManager.getPlayerByJob(jobToPay)
-            .ifPresent(player::addFunds);
+            .ifPresent(player -> player.addFunds(amount));
     }
 }
